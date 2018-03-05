@@ -1,3 +1,18 @@
+
 {
-  "extends": ["eslint:recommended", "plugin:react/recommended"]
+    'env': {
+        'browser': true,
+        'es6': true,
+        'webextensions': true,
+        'jest': true
+        
+    },
+    'extends': 'airbnb',
+    'parserOptions': {
+        'ecmaFeatures': {
+            'jsx': true
+        },
+        'sourceType': 'module'
+    },
+    'plugins': ['react'],
 }
