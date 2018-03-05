@@ -1,0 +1,10 @@
+{
+  "name": "shiori-extension",
+  "version": "0.0.1",
+  "description": "Extension to use shiori bookmark service",
+  "main": "index.js",
+  "repository": "https://github.com/kozko2001/shiori-extension",
+  "author": "Jordi Coscolla",
+  "license": "MIT",
+  "private": false,
+}
