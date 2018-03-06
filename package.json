@@ -9,7 +9,9 @@
   "private": false,
   "scripts": {
     "build": "./node_modules/webpack/bin/webpack.js --mode production",
-    "build-dev": "./node_modules/webpack/bin/webpack.js --watch --mode development"
+    "build-dev": "./node_modules/webpack/bin/webpack.js --watch --mode development",
+    "test": "jest",
+    "test-watch": "jest --watch -o"
   },
   "dependencies": {
     "babel-core": "^6.26.0",
@@ -32,6 +34,14 @@
     "webpack": "^4.1.0"
   },
   "devDependencies": {
+    "jest": "^22.4.2",
+    "jest-fetch-mock": "^1.4.2",
     "webpack-cli": "^2.0.10"
+  },
+  "jest": {
+    "automock": false,
+    "setupFiles": [
+      "./setupJest.js"
+    ]
   }
 }

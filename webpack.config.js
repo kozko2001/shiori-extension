@@ -1,5 +1,5 @@
 module.exports = {
-  entry: './src/popup.js',
+  entry: './src/popup.jsx',
   devtool: 'cheap-source-map',
   module: {
     rules: [
