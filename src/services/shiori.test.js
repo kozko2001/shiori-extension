@@ -18,11 +18,13 @@ describe('network calls tests', () => {
     });
 
     it('log with incorrect username/password, ok should be false', () => {
-      fetch.mockReject(new Error('fake error message'));
+      fetch.mockResponses([
+        'user/password not valid', { status: 500 },
+      ]);
 
       login('username', 'password', true).then((data) => {
         expect(data.ok).toBeFalsy();
-      });
+      }).catch(e => console.log(e));
     });
   });
 
@@ -46,6 +48,14 @@ describe('network calls tests', () => {
       });
     });
 
+    it('send a bookmark and error on server side', () => {
+      fetch.mockResponses([
+        'UNIQUE bookmark violation', { status: 500 },
+      ]);
 
+      insertBookmark('MY-API-TOKEN', 'http://allocsoc.net').then((results) => {
+        expect(results.ok).toBeFalsy();
+      });
+    });
   });
 });

@@ -15,12 +15,12 @@ const login = async (username, password, remember) => {
   };
 };
 
-const insertBookmark = async (token, url) => {
+const insertBookmark = async (token, url, title = '') => {
   const data = {
     excerpt: '',
     id: -1,
     tags: [],
-    title: '',
+    title,
     url,
   };
   const endpoint = `${basePath}/api/bookmarks`;
@@ -34,9 +34,12 @@ const insertBookmark = async (token, url) => {
     body: JSON.stringify(data),
   });
 
+  const { ok } = response;
+
   return {
-    page: await response.json(),
-    ok: response.ok,
+    page: ok ? await response.json() : {},
+    ok,
+    error: ok ? null : response.text,
   };
 };
 

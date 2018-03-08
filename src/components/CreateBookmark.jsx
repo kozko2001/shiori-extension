@@ -1,24 +1,29 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Button, FormGroup, FormControl, Checkbox, ControlLabel, Grid, Row, Col } from 'react-bootstrap';
+import { Button, FormGroup, FormControl, ControlLabel, Grid, Row, Col } from 'react-bootstrap';
 
-export default class Login extends Component {
+export default class CreateBookmark extends Component {
   constructor(props) {
     super(props);
 
     this.handleChange = this.handleChange.bind(this);
-    this.handlerCheckbox = this.handlerCheckbox.bind(this);
     this.handlerSubmit = this.handlerSubmit.bind(this);
 
     this.state = {
-      email: '',
-      password: '',
-      remember: true,
+      url: props.url,
+      title: props.title,
     };
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      url: nextProps.url,
+      title: nextProps.title,
+    });
+  }
+
   validateForm() {
-    return this.state.email.length > 0 && this.state.password.length > 0;
+    return this.state.url.length > 0;
   }
 
   handleChange(event) {
@@ -27,14 +32,9 @@ export default class Login extends Component {
     });
   }
 
-  handlerCheckbox(checked) {
-    this.setState({
-      remember: checked,
-    });
-  }
-
   handlerSubmit(e) {
-    this.props.onLogin(this.state.email, this.state.password, this.state.remember);
+    this.props.onSubmitBookmark(this.state.url, this.state.title);
+
     e.preventDefault();
     return false;
   }
@@ -46,11 +46,11 @@ export default class Login extends Component {
           <Grid>
             <Row>
               <Col xs={10} xsOffset={1}>
-                <FormGroup controlId="email" bsSize="sm">
-                  <ControlLabel>Email</ControlLabel>
+                <FormGroup controlId="url" bsSize="sm">
+                  <ControlLabel>Url</ControlLabel>
                   <FormControl
                     autoFocus
-                    value={this.state.email}
+                    value={this.state.url}
                     onChange={this.handleChange}
                   />
                 </FormGroup>
@@ -58,25 +58,13 @@ export default class Login extends Component {
             </Row>
             <Row>
               <Col xs={10} xsOffset={1}>
-                <FormGroup controlId="password" bsSize="sm">
-                  <ControlLabel>Password</ControlLabel>
+                <FormGroup controlId="title" bsSize="sm">
+                  <ControlLabel>Title</ControlLabel>
                   <FormControl
-                    value={this.state.password}
+                    value={this.state.title}
                     onChange={this.handleChange}
-                    type="password"
                   />
                 </FormGroup>
-              </Col>
-            </Row>
-            <Row>
-              <Col xs={10} xsOffset={1}>
-                <Checkbox
-                  onClick={e => this.handlerCheckbox(e.target.checked)}
-                  checked={this.state.remember}
-                  onChange={this.handleChange}
-                >
-                  Remember
-                </Checkbox>
               </Col>
             </Row>
             <Row>
@@ -84,10 +72,10 @@ export default class Login extends Component {
                 <Button
                   block
                   bsSize="large"
-                  disabled={!this.validateForm()}
                   type="submit"
+                  disabled={!this.validateForm()}
                 >
-                  Login
+                  Send bookmark
                 </Button>
               </Col>
             </Row>
@@ -98,6 +86,8 @@ export default class Login extends Component {
   }
 }
 
-Login.propTypes = {
-  onLogin: PropTypes.func.isRequired,
+CreateBookmark.propTypes = {
+  url: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  onSubmitBookmark: PropTypes.func.isRequired,
 };
