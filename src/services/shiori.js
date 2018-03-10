@@ -1,6 +1,4 @@
-import { basePath } from '../config';
-
-const login = async (username, password, remember) => {
+const login = async (username, password, remember, basePath) => {
   const data = { username, password, remember };
   const url = `${basePath}/api/login`;
 
@@ -15,7 +13,7 @@ const login = async (username, password, remember) => {
   };
 };
 
-const insertBookmark = async (token, url, title = '') => {
+const insertBookmark = async (token, basePath, url, title = '') => {
   const data = {
     excerpt: '',
     id: -1,
@@ -39,7 +37,7 @@ const insertBookmark = async (token, url, title = '') => {
   return {
     page: ok ? await response.json() : {},
     ok,
-    error: ok ? null : response.text,
+    error: ok ? null : await response.text(),
   };
 };
 

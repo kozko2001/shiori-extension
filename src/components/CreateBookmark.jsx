@@ -1,39 +1,37 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { Button, FormGroup, FormControl, ControlLabel, Grid, Row, Col } from 'react-bootstrap';
+import { insertBookmarkAction, initializeBookmark, changeBookmark } from '../redux/actions';
 
-export default class CreateBookmark extends Component {
+class CreateBookmark extends Component {
   constructor(props) {
     super(props);
 
     this.handleChange = this.handleChange.bind(this);
     this.handlerSubmit = this.handlerSubmit.bind(this);
-
-    this.state = {
-      url: props.url,
-      title: props.title,
-    };
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      url: nextProps.url,
-      title: nextProps.title,
-    });
+  componentDidMount() {
+    this.props.initializeBookmark();
   }
 
   validateForm() {
-    return this.state.url.length > 0;
+    return this.props.url.length > 0;
   }
 
   handleChange(event) {
-    this.setState({
-      [event.target.id]: event.target.value,
-    });
+    const data = {
+      title: this.props.title,
+      url: this.props.url,
+    };
+
+    data[event.target.id] = event.target.value;
+    this.props.changeInfo(data.url, data.title);
   }
 
   handlerSubmit(e) {
-    this.props.onSubmitBookmark(this.state.url, this.state.title);
+    this.props.insertBookmark();
 
     e.preventDefault();
     return false;
@@ -50,7 +48,7 @@ export default class CreateBookmark extends Component {
                   <ControlLabel>Url</ControlLabel>
                   <FormControl
                     autoFocus
-                    value={this.state.url}
+                    value={this.props.url}
                     onChange={this.handleChange}
                   />
                 </FormGroup>
@@ -61,7 +59,7 @@ export default class CreateBookmark extends Component {
                 <FormGroup controlId="title" bsSize="sm">
                   <ControlLabel>Title</ControlLabel>
                   <FormControl
-                    value={this.state.title}
+                    value={this.props.title}
                     onChange={this.handleChange}
                   />
                 </FormGroup>
@@ -89,5 +87,20 @@ export default class CreateBookmark extends Component {
 CreateBookmark.propTypes = {
   url: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  onSubmitBookmark: PropTypes.func.isRequired,
+  changeInfo: PropTypes.func.isRequired,
+  insertBookmark: PropTypes.func.isRequired,
+  initializeBookmark: PropTypes.func.isRequired,
 };
+
+const mapStateToProps = state => ({
+  url: state.bookmark.url,
+  title: state.bookmark.title,
+});
+
+const mapDispatchToProps = dispatch => ({
+  changeInfo: (url, title) => dispatch(changeBookmark(url, title)),
+  insertBookmark: () => dispatch(insertBookmarkAction()),
+  initializeBookmark: () => dispatch(initializeBookmark()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreateBookmark);
