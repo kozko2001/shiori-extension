@@ -41,4 +41,17 @@ const insertBookmark = async (token, basePath, url, title = '') => {
   };
 };
 
-export { login, insertBookmark };
+const validateToken = async (token, basePath) => {
+  const endpoint = `${basePath}/api/bookmarks?keyword=&tags=test`;
+  const headers = new Headers({
+    Authorization: `Bearer ${token}`,
+  });
+
+  const response = await fetch(endpoint, {
+    headers,
+  });
+
+  return response.ok;
+};
+
+export { login, insertBookmark, validateToken };

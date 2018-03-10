@@ -1,5 +1,6 @@
-import { login, insertBookmark } from '../services/shiori';
+import { login, insertBookmark, validateToken } from '../services/shiori';
 import { getCurrentUrl } from '../services/chrome';
+
 
 const loginInfoChanged = (key, value) => ({
   type: 'LOGIN_INFO_CHANGED',
@@ -38,6 +39,17 @@ const loginStarted = () => async (dispatch, getState) => {
     }
   } catch (e) {
     dispatch(loginError(e));
+  }
+};
+
+const loginValidateToken = () => async (dispatch, getState) => {
+  const { basePath, token } = getState().login;
+  const ok = await validateToken(token, basePath);
+
+  if (ok) {
+    dispatch(loginSucced(token));
+  } else {
+    dispatch(loginError('Token expired'));
   }
 };
 
@@ -83,6 +95,6 @@ const insertBookmarkAction = () => async (dispatch, getState) => {
 };
 
 export {
-  loginInfoChanged, loginStarted,
+  loginInfoChanged, loginStarted, loginValidateToken,
   insertBookmarkAction, initializeBookmark, changeBookmark,
 };

@@ -1,13 +1,13 @@
 import { combineReducers } from 'redux';
 
 const initialLoginState = {
-  basePath: '',
+  basePath: localStorage.getItem('basePath') || '',
   error: null,
   loading: false,
   username: '',
   password: '',
   remember: true,
-  token: '',
+  token: localStorage.getItem('token') || '',
   state: 'NO_LOGGED',
 };
 
@@ -27,6 +27,9 @@ const loginReducer = (state = initialLoginState, action) => {
     case 'LOGIN_LOADING':
       return Object.assign({}, state, { state: 'LOADING' });
     case 'LOGIN_SUCCESS':
+      localStorage.setItem('basePath', state.basePath);
+      localStorage.setItem('token', action.token);
+
       return Object.assign({}, state, {
         state: 'LOGGED',
         token: action.token,

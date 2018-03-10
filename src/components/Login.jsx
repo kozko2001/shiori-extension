@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Button, FormGroup, FormControl, Checkbox, ControlLabel, Grid, Row, Col } from 'react-bootstrap';
-import { loginInfoChanged, loginStarted } from '../redux/actions';
+import { loginInfoChanged, loginStarted, loginValidateToken } from '../redux/actions';
 
 
 class Login extends Component {
@@ -12,6 +12,10 @@ class Login extends Component {
     this.handlerSubmit = this.handlerSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handlerCheckbox = this.handlerCheckbox.bind(this);
+  }
+
+  componentDidMount() {
+    this.props.validateToken();
   }
 
   handleChange(event) {
@@ -107,6 +111,7 @@ Login.propTypes = {
   remember: PropTypes.bool.isRequired,
   login: PropTypes.func.isRequired,
   changeInfo: PropTypes.func.isRequired,
+  validateToken: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -119,6 +124,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   changeInfo: (key, value) => dispatch(loginInfoChanged(key, value)),
   login: () => dispatch(loginStarted()),
+  validateToken: () => dispatch(loginValidateToken()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
