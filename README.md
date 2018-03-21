@@ -8,7 +8,7 @@ The extension is in a alpha stage, but if you feel brave
 you can try it using the published extensions.
 
 For [Chrome](https://chrome.google.com/webstore/detail/shiori-create-bookmarks-e/admfbhjcnlacjbodldopmpjplnobgcje) and
-for [Firefox](https://chrome.google.com/webstore/detail/shiori-create-bookmarks-e/admfbhjcnlacjbodldopmpjplnobgcje)
+for [Firefox](https://addons.mozilla.org/en-US/firefox/addon/shiori-extension/)
 
 Feel free to create issues on github or give any kind feedback :D
 
