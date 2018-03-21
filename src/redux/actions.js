@@ -38,7 +38,7 @@ const loginStarted = () => async (dispatch, getState) => {
       dispatch(loginError(token));
     }
   } catch (e) {
-    dispatch(loginError(e));
+    dispatch(loginError(e.toString()));
   }
 };
 
@@ -90,7 +90,7 @@ const insertBookmarkAction = () => async (dispatch, getState) => {
       dispatch(insertBookmarkError(error));
     }
   } catch (e) {
-    dispatch(insertBookmarkError(e));
+    dispatch(insertBookmarkError(e.toString()));
   }
 };
 
