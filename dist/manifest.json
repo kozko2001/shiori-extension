@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Shiori create bookmarks extension",
   "description": "This extension allow you to create new bookmarks into shiori. https://github.com/RadhiFadlillah/shiori",
-  "version": "1.0",
+  "version": "1.2",
   "browser_action": {
     "default_icon": "icon.png",
     "default_popup": "popup.html"
